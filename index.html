@@ -357,7 +357,7 @@
   <div class="fiche compte-a-rebours">
     <h2 id="titre-attente">Place bloquée</h2>
     <p class="sous-titre">Il vous reste ce temps pour finaliser le paiement :</p>
-    <div class="minuteur" id="minuteur">10:00</div>
+    <div class="minuteur" id="minuteur">2880:00</div>
     <p style="font-size:0.85rem; color:var(--gris-texte);">Passé ce délai, la place redevient disponible.</p>
     <div class="badge-todo">Paiement à connecter — TODO</div>
     <div class="actions">
@@ -370,7 +370,7 @@
 <script>
   const SUPABASE_URL = 'https://yoxytqdttlnwsxhoymwt.supabase.co';
   const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlveHl0cWR0dGxud3N4aG95bXd0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQ2Mjc3NzEsImV4cCI6MjEwMDIwMzc3MX0.-ShFJA0LRltCjoNj1y4NdZbokmCJ9O7GkpUZjWvtLig';
-  const DUREE_BLOCAGE_MINUTES = 10;
+  const DUREE_BLOCAGE_MINUTES = 2280;
 
   const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
