@@ -370,9 +370,9 @@
 <script>
   const SUPABASE_URL = 'https://yoxytqdttlnwsxhoymwt.supabase.co';
   const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlveHl0cWR0dGxud3N4aG95bXd0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQ2Mjc3NzEsImV4cCI6MjEwMDIwMzc3MX0.-ShFJA0LRltCjoNj1y4NdZbokmCJ9O7GkpUZjWvtLig';
-  const DUREE_BLOCAGE_MINUTES = 10080;
+  const DUREE_BLOCAGE_MINUTES = 10;
 
-  const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
   const ORDRE_ZONES = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M'];
 
@@ -383,7 +383,7 @@
     const conteneur = document.getElementById('plan');
     conteneur.innerHTML = '<p style="color:var(--gris-texte)">Chargement du plan…</p>';
 
-    const { data, error } = await supabase
+    const { data, error } = await supabaseClient
       .from('emplacements')
       .select('*')
       .order('code');
@@ -471,7 +471,7 @@
     const reference = crypto.randomUUID();
     const expiration = new Date(Date.now() + DUREE_BLOCAGE_MINUTES * 60 * 1000).toISOString();
 
-    const { data, error } = await supabase
+    const { data, error } = await supabaseClient
       .from('emplacements')
       .update({
         statut: 'en_attente',
