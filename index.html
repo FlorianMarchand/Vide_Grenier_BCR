@@ -2,350 +2,68 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Vide-greniers P1 — Comité Fête des Roses</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Archivo:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600&family=Archivo:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
 <style>
-  :root {
-    --vert-comite: #2f4a3a;
-    --vert-fonce: #1c2e24;
-    --rose-poudre: #d98fa0;
-    --rose-fonce: #8f3a51;
-    --kraft: #f2ead9;
-    --kraft-fonce: #e4d8bc;
-    --encre: #23241f;
-    --gris-texte: #5c5c52;
-    --libre: #4f7a5a;
-    --libre-fond: #e3ecdf;
-    --attente: #c98a2c;
-    --attente-fond: #f7ead1;
-    --reserve: #9a4444;
-    --reserve-fond: #f1dcdc;
-    --blanc: #fffdf8;
-  }
-
-  * { box-sizing: border-box; }
-
-  body {
-    margin: 0;
-    background: var(--kraft);
-    color: var(--encre);
-    font-family: 'Archivo', sans-serif;
-    line-height: 1.5;
-  }
-
-  .entete {
-    background: var(--vert-comite);
-    color: var(--kraft);
-    padding: 2.5rem 1.5rem 2rem;
-    text-align: center;
-    position: relative;
-    border-bottom: 6px solid var(--vert-fonce);
-  }
-
-  .entete .fleuron {
-    font-size: 0.75rem;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--rose-poudre);
-    margin-bottom: 0.6rem;
-  }
-
-  .entete h1 {
-    font-family: 'Fraunces', serif;
-    font-weight: 600;
-    font-size: clamp(2rem, 5vw, 3rem);
-    margin: 0 0 0.3rem;
-    letter-spacing: -0.01em;
-  }
-
-  .entete p {
-    margin: 0;
-    color: var(--kraft-fonce);
-    font-size: 0.95rem;
-  }
-
-  .conteneur {
-    max-width: 1000px;
-    margin: 0 auto;
-    padding: 2rem 1.25rem 4rem;
-  }
-
-  .legende {
-    display: flex;
-    gap: 1.5rem;
-    justify-content: center;
-    flex-wrap: wrap;
-    margin: 0 0 2rem;
-    padding: 0.9rem;
-    background: var(--blanc);
-    border: 1px solid var(--kraft-fonce);
-    border-radius: 4px;
-  }
-
-  .legende-item {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-size: 0.85rem;
-    color: var(--gris-texte);
-  }
-
-  .puce {
-    width: 12px;
-    height: 12px;
-    border-radius: 2px;
-    display: inline-block;
-  }
-
-  .puce.libre { background: var(--libre); }
-  .puce.attente { background: var(--attente); }
-  .puce.reserve { background: var(--reserve); }
-
-  .zone {
-    margin-bottom: 2.2rem;
-  }
-
-  .zone-titre {
-    display: flex;
-    align-items: baseline;
-    gap: 0.6rem;
-    margin-bottom: 0.7rem;
-  }
-
-  .zone-titre .lettre {
-    font-family: 'Space Mono', monospace;
-    font-weight: 700;
-    font-size: 1.1rem;
-    background: var(--vert-comite);
-    color: var(--kraft);
-    padding: 0.15rem 0.55rem;
-    border-radius: 3px;
-  }
-
-  .zone-titre .compte {
-    font-size: 0.8rem;
-    color: var(--gris-texte);
-  }
-
-  .grille {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(58px, 1fr));
-    gap: 6px;
-  }
-
-  .place {
-    font-family: 'Space Mono', monospace;
-    font-size: 0.72rem;
-    font-weight: 700;
-    padding: 0.5rem 0.2rem;
-    text-align: center;
-    border-radius: 3px;
-    border: 1px solid transparent;
-    cursor: pointer;
-    transition: transform 0.08s ease;
-    background: var(--libre-fond);
-    color: var(--libre);
-    border-color: var(--libre);
-  }
-
-  .place:hover { transform: translateY(-2px); }
-
-  .place.en_attente {
-    background: var(--attente-fond);
-    color: var(--attente);
-    border-color: var(--attente);
-    cursor: not-allowed;
-  }
-
-  .place.reserve {
-    background: var(--reserve-fond);
-    color: var(--reserve);
-    border-color: var(--reserve);
-    cursor: not-allowed;
-    opacity: 0.85;
-  }
-
-  .place.chargement {
-    background: var(--kraft-fonce);
-    color: var(--gris-texte);
-    border-color: var(--kraft-fonce);
-    cursor: default;
-  }
-
-  .voile {
-    display: none;
-    position: fixed;
-    inset: 0;
-    background: rgba(28, 46, 36, 0.55);
-    align-items: center;
-    justify-content: center;
-    padding: 1rem;
-    z-index: 10;
-  }
-
-  .voile.ouvert { display: flex; }
-
-  .fiche {
-    background: var(--blanc);
-    border-radius: 6px;
-    max-width: 420px;
-    width: 100%;
-    padding: 1.8rem;
-    border: 1px solid var(--kraft-fonce);
-  }
-
-  .fiche h2 {
-    font-family: 'Fraunces', serif;
-    font-weight: 600;
-    font-size: 1.4rem;
-    margin: 0 0 0.2rem;
-    color: var(--vert-fonce);
-  }
-
-  .fiche .sous-titre {
-    font-size: 0.85rem;
-    color: var(--gris-texte);
-    margin: 0 0 1.3rem;
-  }
-
-  .champ { margin-bottom: 1rem; }
-
-  .champ label {
-    display: block;
-    font-size: 0.8rem;
-    font-weight: 500;
-    margin-bottom: 0.3rem;
-    color: var(--encre);
-  }
-
-  .champ input {
-    width: 100%;
-    padding: 0.6rem 0.7rem;
-    border: 1px solid var(--kraft-fonce);
-    border-radius: 4px;
-    font-family: 'Archivo', sans-serif;
-    font-size: 0.9rem;
-    background: var(--kraft);
-  }
-
-  .champ input:focus {
-    outline: 2px solid var(--vert-comite);
-    outline-offset: 1px;
-  }
-
-  .actions {
-    display: flex;
-    gap: 0.6rem;
-    margin-top: 1.4rem;
-  }
-
-  .bouton {
-    flex: 1;
-    padding: 0.7rem 1rem;
-    border-radius: 4px;
-    border: none;
-    font-family: 'Archivo', sans-serif;
-    font-weight: 600;
-    font-size: 0.9rem;
-    cursor: pointer;
-  }
-
-  .bouton.principal {
-    background: var(--vert-comite);
-    color: var(--kraft);
-  }
-
-  .bouton.principal:hover { background: var(--vert-fonce); }
-
-  .bouton.secondaire {
-    background: transparent;
-    color: var(--gris-texte);
-    border: 1px solid var(--kraft-fonce);
-  }
-
-  .erreur {
-    color: var(--reserve);
-    font-size: 0.82rem;
-    margin-top: 0.6rem;
-    display: none;
-  }
-
-  .compte-a-rebours {
-    text-align: center;
-    padding: 2rem 1rem;
-  }
-
-  .compte-a-rebours .minuteur {
-    font-family: 'Space Mono', monospace;
-    font-size: 2.4rem;
-    font-weight: 700;
-    color: var(--attente);
-    margin: 0.8rem 0;
-  }
-
-  .badge-todo {
-    display: inline-block;
-    font-size: 0.72rem;
-    background: var(--attente-fond);
-    color: var(--attente);
-    padding: 0.2rem 0.5rem;
-    border-radius: 3px;
-    margin-top: 0.6rem;
-    font-weight: 600;
-  }
-
-  .pied {
-    text-align: center;
-    font-size: 0.78rem;
-    color: var(--gris-texte);
-    padding-top: 1rem;
-  }
+:root{--vert:#2f4a3a;--vert-fonce:#1c2e24;--rose:#d98fa0;--kraft:#f2ead9;--kraft2:#e4d8bc;--texte:#23241f;--gris:#5c5c52;--libre:#4f7a5a;--libre-bg:#e3ecdf;--attente:#c98a2c;--attente-bg:#f7ead1;--reserve:#9a4444;--reserve-bg:#f1dcdc;--blanc:#fffdf8}
+*{box-sizing:border-box}
+body{margin:0;background:var(--kraft);color:var(--texte);font-family:Archivo,sans-serif}
+.entete{background:var(--vert);color:var(--kraft);padding:2.5rem 1.5rem 2rem;text-align:center;border-bottom:6px solid var(--vert-fonce)}
+.fleuron{font-size:.75rem;letter-spacing:.18em;text-transform:uppercase;color:var(--rose);margin-bottom:.6rem}
+h1{font-family:Fraunces,serif;font-size:clamp(2rem,5vw,3rem);margin:0 0 .3rem}
+.entete p{margin:0;color:var(--kraft2);font-size:.95rem}
+.conteneur{max-width:1200px;margin:auto;padding:2rem 1.25rem 4rem}
+.legende{display:flex;gap:1.5rem;justify-content:center;flex-wrap:wrap;margin-bottom:2rem;padding:.9rem;background:var(--blanc);border:1px solid var(--kraft2)}
+.legende-item{display:flex;align-items:center;gap:.5rem;font-size:.85rem;color:var(--gris)}
+.puce{width:12px;height:12px;border-radius:2px}.puce.libre{background:var(--libre)}.puce.attente{background:var(--attente)}.puce.reserve{background:var(--reserve)}
+#plan{width:100%;overflow-x:auto;background:var(--blanc);border:1px solid var(--kraft2);padding:1.5rem}
+.zone{margin-bottom:1.5rem;min-width:max-content}.zone:last-child{margin-bottom:0}
+.zone-titre{display:flex;align-items:center;gap:.7rem;margin-bottom:0}
+.lettre{width:32px;height:40px;display:flex;align-items:center;justify-content:center;font-family:"Space Mono",monospace;font-weight:700}
+.compte{font-size:.75rem;color:var(--gris)}
+.grille{display:flex;flex-wrap:nowrap;min-width:max-content}
+.place{width:46px;min-width:46px;height:40px;display:flex;align-items:center;justify-content:center;font-family:"Space Mono",monospace;font-size:.57rem;background:var(--libre-bg);color:var(--libre);border:1px solid var(--libre);cursor:pointer}
+.place:hover{background:#d4e3d0;z-index:2}.place.en_attente{background:var(--attente-bg);color:var(--attente);border-color:var(--attente);cursor:not-allowed}.place.reserve{background:var(--reserve-bg);color:var(--reserve);border-color:var(--reserve);cursor:not-allowed;opacity:.85}
+.voile{display:none;position:fixed;inset:0;background:#1c2e248c;align-items:center;justify-content:center;padding:1rem;z-index:10}.voile.ouvert{display:flex}
+.fiche{background:var(--blanc);border-radius:6px;max-width:420px;width:100%;padding:1.8rem;border:1px solid var(--kraft2)}
+.fiche h2{font-family:Fraunces,serif;margin:0 0 .2rem;color:var(--vert-fonce)}.sous-titre{font-size:.85rem;color:var(--gris);margin:0 0 1.3rem}
+.champ{margin-bottom:1rem}.champ label{display:block;font-size:.8rem;margin-bottom:.3rem}.champ input{width:100%;padding:.6rem .7rem;border:1px solid var(--kraft2);border-radius:4px;font:inherit;background:var(--kraft)}
+.actions{display:flex;gap:.6rem;margin-top:1.4rem}.bouton{flex:1;padding:.7rem 1rem;border-radius:4px;font:600 .9rem Archivo;cursor:pointer}.principal{background:var(--vert);color:var(--kraft);border:0}.secondaire{background:transparent;color:var(--gris);border:1px solid var(--kraft2)}
+.erreur{color:var(--reserve);font-size:.82rem;display:none}.compte-a-rebours{text-align:center;padding:2rem 1rem}.minuteur{font:700 2.4rem "Space Mono";color:var(--attente);margin:.8rem 0}.badge-todo{display:inline-block;font-size:.72rem;background:var(--attente-bg);color:var(--attente);padding:.2rem .5rem;border-radius:3px;font-weight:600}.pied{text-align:center;font-size:.78rem;color:var(--gris);padding-top:1rem}
+@media(max-width:700px){.entete{padding:2rem 1rem 1.5rem}.conteneur{padding:1rem .5rem 3rem}#plan{padding:1rem}.place{width:42px;min-width:42px;height:38px;font-size:.52rem}.lettre{width:28px;height:38px}}
 </style>
 </head>
-<body>
 
-<div class="entete">
+<body>
+<header class="entete">
   <div class="fleuron">Comité Fête des Roses</div>
   <h1>Vide-greniers · Parking N°1</h1>
   <p>Cimetière de Brie-Comte-Robert — réservation d'emplacement en ligne</p>
-</div>
+</header>
 
-<div class="conteneur">
-
+<main class="conteneur">
   <div class="legende">
-    <div class="legende-item"><span class="puce libre"></span> Libre</div>
-    <div class="legende-item"><span class="puce attente"></span> En attente de paiement</div>
-    <div class="legende-item"><span class="puce reserve"></span> Réservé</div>
+    <div class="legende-item"><span class="puce libre"></span>Libre</div>
+    <div class="legende-item"><span class="puce attente"></span>En attente de paiement</div>
+    <div class="legende-item"><span class="puce reserve"></span>Réservé</div>
   </div>
 
-  <div id="plan"></div>
-
+  <div id="plan">Chargement du plan…</div>
   <p class="pied">Chaque emplacement fait la même dimension sur l'ensemble du vide-greniers.</p>
-</div>
+</main>
 
 <div class="voile" id="voile-formulaire">
   <div class="fiche">
     <h2 id="titre-fiche">Réserver l'emplacement</h2>
     <p class="sous-titre" id="sous-titre-fiche">Complétez vos coordonnées pour bloquer cette place 10 minutes.</p>
-
-    <div class="champ">
-      <label for="champ-nom">Nom et prénom</label>
-      <input type="text" id="champ-nom" placeholder="Marie Dupont" autocomplete="name">
-    </div>
-    <div class="champ">
-      <label for="champ-email">Email</label>
-      <input type="email" id="champ-email" placeholder="marie.dupont@email.fr" autocomplete="email">
-    </div>
-    <div class="champ">
-      <label for="champ-telephone">Téléphone</label>
-      <input type="tel" id="champ-telephone" placeholder="06 12 34 56 78" autocomplete="tel">
-    </div>
-
+    <div class="champ"><label>Nom et prénom</label><input id="champ-nom" placeholder="Marie Dupont"></div>
+    <div class="champ"><label>Email</label><input type="email" id="champ-email" placeholder="marie.dupont@email.fr"></div>
+    <div class="champ"><label>Téléphone</label><input id="champ-telephone" placeholder="06 12 34 56 78"></div>
     <p class="erreur" id="message-erreur"></p>
-
     <div class="actions">
       <button class="bouton secondaire" onclick="fermerFormulaire()">Annuler</button>
       <button class="bouton principal" onclick="validerReservation()">Bloquer la place</button>
@@ -358,174 +76,87 @@
     <h2 id="titre-attente">Place bloquée</h2>
     <p class="sous-titre">Il vous reste ce temps pour finaliser le paiement :</p>
     <div class="minuteur" id="minuteur">10:00</div>
-    <p style="font-size:0.85rem; color:var(--gris-texte);">Passé ce délai, la place redevient disponible.</p>
+    <p>Passé ce délai, la place redevient disponible.</p>
     <div class="badge-todo">Paiement à connecter — TODO</div>
-    <div class="actions">
-      <button class="bouton secondaire" onclick="fermerAttente()">Fermer</button>
-    </div>
+    <div class="actions"><button class="bouton secondaire" onclick="fermerAttente()">Fermer</button></div>
   </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-  const SUPABASE_URL = 'https://yoxytqdttlnwsxhoymwt.supabase.co';
-  const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlveHl0cWR0dGxud3N4aG95bXd0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQ2Mjc3NzEsImV4cCI6MjEwMDIwMzc3MX0.-ShFJA0LRltCjoNj1y4NdZbokmCJ9O7GkpUZjWvtLig';
-  const DUREE_BLOCAGE_MINUTES = 10;
+const SUPABASE_URL='https://yoxytqdttlnwsxhoymwt.supabase.co';
+const SUPABASE_ANON_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlveHl0cWR0dGxud3N4aG95bXd0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQ2Mjc3NzEsImV4cCI6MjEwMDIwMzc3MX0.-ShFJA0LRltCjoNj1y4NdZbokmCJ9O7GkpUZjWvtLig';
+const supabaseClient=window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
+const DUREE=10,ORDRE=['A','B','C','D','E','F','G','H','I','J','K','L','M'];
+let selection=null,timer=null;
 
-  const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
-  const ORDRE_ZONES = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M'];
-
-  let placeSelectionnee = null;
-  let minuteurId = null;
-
-  async function chargerPlan() {
-    const conteneur = document.getElementById('plan');
-    conteneur.innerHTML = '<p style="color:var(--gris-texte)">Chargement du plan…</p>';
-
-    const { data, error } = await supabaseClient
-      .from('emplacements')
-      .select('*')
-      .order('code');
-
-    if (error) {
-      conteneur.innerHTML = '<p class="erreur" style="display:block">Impossible de charger le plan. Vérifiez la configuration Supabase.</p>';
-      return;
-    }
-
-    const parZone = {};
-    data.forEach(place => {
-      if (!parZone[place.zone]) parZone[place.zone] = [];
-      parZone[place.zone].push(place);
+async function chargerPlan(){
+  const plan=document.getElementById('plan');
+  plan.innerHTML='Chargement du plan…';
+  const{data,error}=await supabaseClient.from('emplacements').select('*').order('code');
+  if(error){plan.innerHTML='<p class="erreur" style="display:block">Impossible de charger le plan. Vérifiez Supabase.</p>';return}
+  const zones={};
+  data.forEach(p=>(zones[p.zone]??=[]).push(p));
+  plan.innerHTML='';
+  ORDRE.forEach(zone=>{
+    if(!zones[zone])return;
+    const places=zones[zone],section=document.createElement('div');
+    section.className='zone';
+    section.innerHTML=`<div class="zone-titre"><span class="lettre">${zone}</span><span class="compte">${places.length} emplacements</span></div><div class="grille"></div>`;
+    plan.appendChild(section);
+    const grille=section.querySelector('.grille');
+    places.forEach(p=>{
+      const b=document.createElement('div');
+      b.className=`place ${p.statut==='libre'?'':p.statut}`;
+      b.textContent=p.code;
+      b.title=p.statut==='libre'?'Libre — cliquez pour réserver':p.statut==='en_attente'?'En attente de paiement':'Déjà réservé';
+      if(p.statut==='libre')b.onclick=()=>ouvrirFormulaire(p);
+      grille.appendChild(b);
     });
+  });
+}
 
-    conteneur.innerHTML = '';
-    ORDRE_ZONES.forEach(zone => {
-      if (!parZone[zone]) return;
-      const places = parZone[zone];
-      const section = document.createElement('div');
-      section.className = 'zone';
-      section.innerHTML = `
-        <div class="zone-titre">
-          <span class="lettre">${zone}</span>
-          <span class="compte">${places.length} emplacements</span>
-        </div>
-        <div class="grille" id="grille-${zone}"></div>
-      `;
-      conteneur.appendChild(section);
+function ouvrirFormulaire(p){
+  selection=p;
+  document.getElementById('titre-fiche').textContent=`Réserver l'emplacement ${p.code}`;
+  document.getElementById('sous-titre-fiche').textContent=`Zone ${p.zone} — la place sera bloquée ${DUREE} minutes le temps du paiement.`;
+  ['champ-nom','champ-email','champ-telephone'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('message-erreur').style.display='none';
+  document.getElementById('voile-formulaire').classList.add('ouvert');
+}
 
-      const grille = section.querySelector('.grille');
-      places.forEach(place => {
-        const bouton = document.createElement('div');
-        bouton.className = `place ${place.statut === 'libre' ? '' : place.statut}`;
-        bouton.textContent = place.code;
-        bouton.title = libelleStatut(place.statut);
-        if (place.statut === 'libre') {
-          bouton.onclick = () => ouvrirFormulaire(place);
-        }
-        grille.appendChild(bouton);
-      });
-    });
-  }
+function fermerFormulaire(){document.getElementById('voile-formulaire').classList.remove('ouvert');selection=null}
+function erreur(t){const e=document.getElementById('message-erreur');e.textContent=t;e.style.display='block'}
 
-  function libelleStatut(statut) {
-    if (statut === 'libre') return 'Libre — cliquez pour réserver';
-    if (statut === 'en_attente') return 'En attente de paiement';
-    return 'Déjà réservé';
-  }
-
-  function ouvrirFormulaire(place) {
-    placeSelectionnee = place;
-    document.getElementById('titre-fiche').textContent = `Réserver l'emplacement ${place.code}`;
-    document.getElementById('sous-titre-fiche').textContent =
-      `Zone ${place.zone} — la place sera bloquée ${DUREE_BLOCAGE_MINUTES} minutes le temps du paiement.`;
-    document.getElementById('champ-nom').value = '';
-    document.getElementById('champ-email').value = '';
-    document.getElementById('champ-telephone').value = '';
-    document.getElementById('message-erreur').style.display = 'none';
-    document.getElementById('voile-formulaire').classList.add('ouvert');
-  }
-
-  function fermerFormulaire() {
-    document.getElementById('voile-formulaire').classList.remove('ouvert');
-    placeSelectionnee = null;
-  }
-
-  function afficherErreur(texte) {
-    const el = document.getElementById('message-erreur');
-    el.textContent = texte;
-    el.style.display = 'block';
-  }
-
-  async function validerReservation() {
-    const nom = document.getElementById('champ-nom').value.trim();
-    const email = document.getElementById('champ-email').value.trim();
-    const telephone = document.getElementById('champ-telephone').value.trim();
-
-    if (!nom || !email || !telephone) {
-      afficherErreur('Merci de remplir tous les champs.');
-      return;
-    }
-    if (!placeSelectionnee) return;
-
-    const reference = crypto.randomUUID();
-    const expiration = new Date(Date.now() + DUREE_BLOCAGE_MINUTES * 60 * 1000).toISOString();
-
-    const { data, error } = await supabaseClient
-      .from('emplacements')
-      .update({
-        statut: 'en_attente',
-        nom, email, telephone,
-        reference_paiement: reference,
-        expiration
-      })
-      .eq('code', placeSelectionnee.code)
-      .eq('statut', 'libre')
-      .select();
-
-    if (error || !data || data.length === 0) {
-      afficherErreur("Cette place vient d'être prise. Choisissez-en une autre.");
-      await chargerPlan();
-      return;
-    }
-
-    fermerFormulaire();
-    demarrerAttente(placeSelectionnee.code, expiration);
-    await chargerPlan();
-
-    // TODO — brancher ici la redirection vers l'app tierce de paiement
-    // Exemple : window.location = `URL_APP_PAIEMENT?ref=${reference}&emplacement=${placeSelectionnee.code}`;
-  }
-
-  function demarrerAttente(code, expirationISO) {
-    document.getElementById('titre-attente').textContent = `Place ${code} bloquée`;
-    document.getElementById('voile-attente').classList.add('ouvert');
-
-    const expiration = new Date(expirationISO).getTime();
-    clearInterval(minuteurId);
-    minuteurId = setInterval(() => {
-      const restant = Math.max(0, expiration - Date.now());
-      const minutes = Math.floor(restant / 60000);
-      const secondes = Math.floor((restant % 60000) / 1000);
-      document.getElementById('minuteur').textContent =
-        `${String(minutes).padStart(2, '0')}:${String(secondes).padStart(2, '0')}`;
-      if (restant <= 0) {
-        clearInterval(minuteurId);
-        fermerAttente();
-        chargerPlan();
-      }
-    }, 1000);
-  }
-
-  function fermerAttente() {
-    document.getElementById('voile-attente').classList.remove('ouvert');
-    clearInterval(minuteurId);
-  }
-
-  // Rafraîchit le plan toutes les 15 secondes pour voir les places libérées/prises par d'autres visiteurs
+async function validerReservation(){
+  const nom=document.getElementById('champ-nom').value.trim(),email=document.getElementById('champ-email').value.trim(),telephone=document.getElementById('champ-telephone').value.trim();
+  if(!nom||!email||!telephone)return erreur('Merci de remplir tous les champs.');
+  if(!selection)return;
+  const reference=crypto.randomUUID(),expiration=new Date(Date.now()+DUREE*60000).toISOString();
+  const{data,error}=await supabaseClient.from('emplacements').update({statut:'en_attente',nom,email,telephone,reference_paiement:reference,expiration}).eq('code',selection.code).eq('statut','libre').select();
+  if(error||!data?.length){erreur("Cette place vient d'être prise. Choisissez-en une autre.");return chargerPlan()}
+  const code=selection.code;
+  fermerFormulaire();
+  demarrerAttente(code,expiration);
   chargerPlan();
-  setInterval(chargerPlan, 60000);
-</script>
+  // TODO : redirection vers le paiement
+}
 
+function demarrerAttente(code,expirationISO){
+  document.getElementById('titre-attente').textContent=`Place ${code} bloquée`;
+  document.getElementById('voile-attente').classList.add('ouvert');
+  const fin=new Date(expirationISO).getTime();
+  clearInterval(timer);
+  timer=setInterval(()=>{
+    const r=Math.max(0,fin-Date.now()),m=Math.floor(r/60000),s=Math.floor(r%60000/1000);
+    document.getElementById('minuteur').textContent=`${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+    if(!r){clearInterval(timer);fermerAttente();chargerPlan()}
+  },1000);
+}
+
+function fermerAttente(){document.getElementById('voile-attente').classList.remove('ouvert');clearInterval(timer)}
+chargerPlan();
+setInterval(chargerPlan,60000);
+</script>
 </body>
 </html>
