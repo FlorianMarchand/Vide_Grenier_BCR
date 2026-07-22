@@ -1,0 +1,877 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vide-greniers P1 — Comité Fête des Roses</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Archivo:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --vert-comite: #2f4a3a;
+    --vert-fonce: #1c2e24;
+    --rose-poudre: #d98fa0;
+    --rose-fonce: #8f3a51;
+    --kraft: #f2ead9;
+    --kraft-fonce: #e4d8bc;
+    --encre: #23241f;
+    --gris-texte: #5c5c52;
+    --libre: #4f7a5a;
+    --libre-fond: #e3ecdf;
+    --attente: #c98a2c;
+    --attente-fond: #f7ead1;
+    --reserve: #9a4444;
+    --reserve-fond: #f1dcdc;
+    --or: #a97c1f;
+    --or-fond: #f4e6c3;
+    --blanc: #fffdf8;
+    --route: #b7a684;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--kraft);
+    color: var(--encre);
+    font-family: 'Archivo', sans-serif;
+    line-height: 1.5;
+    padding-bottom: 90px;
+  }
+
+  .entete {
+    background: var(--vert-comite);
+    color: var(--kraft);
+    padding: 2.2rem 1.5rem 1.7rem;
+    text-align: center;
+    border-bottom: 6px solid var(--vert-fonce);
+  }
+
+  .entete .fleuron {
+    font-size: 0.75rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--rose-poudre);
+    margin-bottom: 0.5rem;
+  }
+
+  .entete h1 {
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: clamp(1.7rem, 4.5vw, 2.6rem);
+    margin: 0 0 0.25rem;
+    letter-spacing: -0.01em;
+  }
+
+  .entete p {
+    margin: 0;
+    color: var(--kraft-fonce);
+    font-size: 0.9rem;
+  }
+
+  .conteneur {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1.5rem 1rem 3rem;
+  }
+
+  .legende {
+    display: flex;
+    gap: 1.3rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin: 0 0 1.3rem;
+    padding: 0.8rem;
+    background: var(--blanc);
+    border: 1px solid var(--kraft-fonce);
+    border-radius: 4px;
+    font-size: 0.82rem;
+  }
+
+  .legende-item {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    color: var(--gris-texte);
+  }
+
+  .puce {
+    width: 11px;
+    height: 11px;
+    border-radius: 2px;
+    display: inline-block;
+  }
+
+  .puce.libre { background: var(--libre); }
+  .puce.attente { background: var(--attente); }
+  .puce.reserve { background: var(--reserve); }
+  .puce.selection { background: var(--or); }
+
+  /* ============ CARTE (mise en page façon plan) ============ */
+
+  .carte {
+    background: var(--route);
+    border-radius: 6px;
+    padding: 14px;
+  }
+
+  .carte-interieur {
+    background: var(--blanc);
+    border: 4px solid #7a6a45;
+    border-radius: 4px;
+    padding: 16px;
+    display: grid;
+    grid-template-columns: 250px 1fr 68px;
+    grid-template-areas:
+      "entree entree entree"
+      "zoneA  zoneA  zoneA"
+      "gauche droite m";
+    gap: 14px;
+  }
+
+  .bloc-entree {
+    grid-area: entree;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding-bottom: 6px;
+    border-bottom: 2px dashed var(--kraft-fonce);
+  }
+
+  .bloc-entree .etiquette-entree {
+    font-weight: 600;
+    font-size: 0.85rem;
+    border: 2px solid var(--encre);
+    padding: 0.35rem 0.8rem;
+    border-radius: 3px;
+  }
+
+  .bloc-entree .fleche {
+    font-size: 0.78rem;
+    color: var(--gris-texte);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .zone-a-large {
+    grid-area: zoneA;
+  }
+
+  .colonne-gauche {
+    grid-area: gauche;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .colonne-droite {
+    grid-area: droite;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .colonne-m {
+    grid-area: m;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  .decor {
+    border: 1px dashed var(--kraft-fonce);
+    border-radius: 4px;
+    padding: 0.6rem;
+    font-size: 0.7rem;
+    color: var(--gris-texte);
+    text-align: center;
+    background: var(--kraft);
+  }
+
+  .decor.rose {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .decor.rose .emblème {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: var(--rose-fonce);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--kraft);
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: 0.9rem;
+  }
+
+  .zone-bloc {
+    border: 1px solid var(--kraft-fonce);
+    border-radius: 4px;
+    padding: 0.55rem;
+    background: var(--kraft);
+  }
+
+  .zone-entete {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+    margin-bottom: 0.4rem;
+  }
+
+  .zone-entete .lettre {
+    font-family: 'Space Mono', monospace;
+    font-weight: 700;
+    font-size: 0.9rem;
+    background: var(--vert-comite);
+    color: var(--kraft);
+    padding: 0.1rem 0.45rem;
+    border-radius: 3px;
+  }
+
+  .zone-entete .arrivee {
+    font-size: 0.68rem;
+    color: var(--gris-texte);
+  }
+
+  .grille {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(46px, 1fr));
+    gap: 4px;
+  }
+
+  .grille.zone-large {
+    grid-template-columns: repeat(auto-fill, minmax(40px, 1fr));
+  }
+
+  .colonne-m .grille {
+    grid-template-columns: 1fr;
+  }
+
+  .place {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.64rem;
+    font-weight: 700;
+    padding: 0.4rem 0.15rem;
+    text-align: center;
+    border-radius: 3px;
+    border: 1.5px solid transparent;
+    cursor: pointer;
+    transition: transform 0.08s ease;
+    background: var(--libre-fond);
+    color: var(--libre);
+    border-color: var(--libre);
+  }
+
+  .place:hover { transform: translateY(-2px); }
+
+  .place.en_attente {
+    background: var(--attente-fond);
+    color: var(--attente);
+    border-color: var(--attente);
+    cursor: not-allowed;
+  }
+
+  .place.reserve {
+    background: var(--reserve-fond);
+    color: var(--reserve);
+    border-color: var(--reserve);
+    cursor: not-allowed;
+    opacity: 0.85;
+  }
+
+  .place.selectionnee {
+    background: var(--or-fond);
+    color: var(--or);
+    border-color: var(--or);
+    box-shadow: 0 0 0 2px var(--or-fond);
+  }
+
+  .pied {
+    text-align: center;
+    font-size: 0.78rem;
+    color: var(--gris-texte);
+    padding-top: 1rem;
+  }
+
+  /* ============ PANIER DE SELECTION ============ */
+
+  .panier {
+    position: fixed;
+    left: 0; right: 0; bottom: 0;
+    background: var(--vert-fonce);
+    color: var(--kraft);
+    padding: 0.8rem 1.2rem;
+    display: none;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+    z-index: 8;
+    border-top: 3px solid var(--or);
+  }
+
+  .panier.visible { display: flex; }
+
+  .panier-info {
+    font-size: 0.85rem;
+  }
+
+  .panier-info strong { color: var(--or-fond); }
+
+  .panier-actions {
+    display: flex;
+    gap: 0.6rem;
+  }
+
+  /* ============ MODALES ============ */
+
+  .voile {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(28, 46, 36, 0.55);
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    z-index: 10;
+  }
+
+  .voile.ouvert { display: flex; }
+
+  .fiche {
+    background: var(--blanc);
+    border-radius: 6px;
+    max-width: 440px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    padding: 1.8rem;
+    border: 1px solid var(--kraft-fonce);
+  }
+
+  .fiche h2 {
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: 1.4rem;
+    margin: 0 0 0.2rem;
+    color: var(--vert-fonce);
+  }
+
+  .fiche .sous-titre {
+    font-size: 0.85rem;
+    color: var(--gris-texte);
+    margin: 0 0 1rem;
+  }
+
+  .liste-selection {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    margin-bottom: 1.2rem;
+  }
+
+  .liste-selection span {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.72rem;
+    font-weight: 700;
+    background: var(--or-fond);
+    color: var(--or);
+    padding: 0.2rem 0.45rem;
+    border-radius: 3px;
+  }
+
+  .champ { margin-bottom: 1rem; }
+
+  .champ label {
+    display: block;
+    font-size: 0.8rem;
+    font-weight: 500;
+    margin-bottom: 0.3rem;
+    color: var(--encre);
+  }
+
+  .champ input {
+    width: 100%;
+    padding: 0.6rem 0.7rem;
+    border: 1px solid var(--kraft-fonce);
+    border-radius: 4px;
+    font-family: 'Archivo', sans-serif;
+    font-size: 0.9rem;
+    background: var(--kraft);
+  }
+
+  .champ input:focus {
+    outline: 2px solid var(--vert-comite);
+    outline-offset: 1px;
+  }
+
+  .actions {
+    display: flex;
+    gap: 0.6rem;
+    margin-top: 1.2rem;
+  }
+
+  .bouton {
+    flex: 1;
+    padding: 0.65rem 1rem;
+    border-radius: 4px;
+    border: none;
+    font-family: 'Archivo', sans-serif;
+    font-weight: 600;
+    font-size: 0.85rem;
+    cursor: pointer;
+  }
+
+  .bouton.principal {
+    background: var(--vert-comite);
+    color: var(--kraft);
+  }
+
+  .bouton.principal:hover { background: var(--vert-fonce); }
+
+  .bouton.or {
+    background: var(--or);
+    color: var(--blanc);
+  }
+
+  .bouton.secondaire {
+    background: transparent;
+    color: var(--gris-texte);
+    border: 1px solid var(--kraft-fonce);
+  }
+
+  .erreur {
+    color: var(--reserve);
+    font-size: 0.82rem;
+    margin-top: 0.6rem;
+    display: none;
+  }
+
+  .compte-a-rebours {
+    text-align: center;
+    padding: 1.6rem 1rem;
+  }
+
+  .compte-a-rebours .minuteur {
+    font-family: 'Space Mono', monospace;
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: var(--attente);
+    margin: 0.7rem 0;
+  }
+
+  .badge-todo {
+    display: inline-block;
+    font-size: 0.72rem;
+    background: var(--attente-fond);
+    color: var(--attente);
+    padding: 0.2rem 0.5rem;
+    border-radius: 3px;
+    margin-top: 0.5rem;
+    font-weight: 600;
+  }
+
+  @media (max-width: 760px) {
+    .carte-interieur {
+      grid-template-columns: 1fr;
+      grid-template-areas:
+        "entree"
+        "zoneA"
+        "gauche"
+        "droite"
+        "m";
+    }
+  }
+</style>
+</head>
+<body>
+
+<div class="entete">
+  <div class="fleuron">Comité Fête des Roses</div>
+  <h1>Vide-greniers · Parking N°1</h1>
+  <p>Cimetière de Brie-Comte-Robert — réservation d'emplacement en ligne</p>
+</div>
+
+<div class="conteneur">
+
+  <div class="legende">
+    <div class="legende-item"><span class="puce libre"></span> Libre</div>
+    <div class="legende-item"><span class="puce selection"></span> Sélectionné</div>
+    <div class="legende-item"><span class="puce attente"></span> En attente de paiement</div>
+    <div class="legende-item"><span class="puce reserve"></span> Réservé</div>
+  </div>
+
+  <div class="carte">
+    <div class="carte-interieur" id="carte-interieur">
+      <p style="grid-column: 1/-1; color: var(--gris-texte);">Chargement du plan…</p>
+    </div>
+  </div>
+
+  <p class="pied">Chaque emplacement fait la même dimension sur l'ensemble du vide-greniers. Cliquez sur plusieurs places libres pour les réserver ensemble.</p>
+</div>
+
+<div class="panier" id="panier">
+  <div class="panier-info"><strong id="panier-compte">0</strong> place(s) sélectionnée(s) — <span id="panier-liste"></span> — <strong id="panier-prix">0 €</strong></div>
+  <div class="panier-actions">
+    <button class="bouton secondaire" onclick="viderSelection()">Vider</button>
+    <button class="bouton or" onclick="ouvrirFormulaireMultiple()">Réserver ces places</button>
+  </div>
+</div>
+
+<div class="voile" id="voile-formulaire">
+  <div class="fiche">
+    <h2>Réserver mes emplacements</h2>
+    <p class="sous-titre" id="sous-titre-formulaire">Ces places seront bloquées 48h le temps du paiement.</p>
+
+    <div class="liste-selection" id="liste-selection-formulaire"></div>
+    <p style="font-weight:600; margin: -0.6rem 0 1.2rem; color: var(--vert-fonce);">
+      Total à régler : <span id="prix-formulaire">0 €</span>
+    </p>
+
+    <div class="champ">
+      <label for="champ-nom">Nom et prénom</label>
+      <input type="text" id="champ-nom" placeholder="Marie Dupont" autocomplete="name">
+    </div>
+    <div class="champ">
+      <label for="champ-email">Email</label>
+      <input type="email" id="champ-email" placeholder="marie.dupont@email.fr" autocomplete="email">
+    </div>
+    <div class="champ">
+      <label for="champ-telephone">Téléphone</label>
+      <input type="tel" id="champ-telephone" placeholder="06 12 34 56 78" autocomplete="tel">
+    </div>
+
+    <p class="erreur" id="message-erreur"></p>
+
+    <div class="actions">
+      <button class="bouton secondaire" onclick="fermerFormulaire()">Annuler</button>
+      <button class="bouton principal" onclick="validerReservation()">Bloquer ces places</button>
+    </div>
+  </div>
+</div>
+
+<div class="voile" id="voile-attente">
+  <div class="fiche compte-a-rebours">
+    <h2 id="titre-attente">Places bloquées</h2>
+    <p class="sous-titre" id="sous-titre-attente">Il vous reste ce temps pour finaliser le paiement :</p>
+    <div class="minuteur" id="minuteur">10:00</div>
+    <p style="font-size:0.85rem; color:var(--gris-texte);">Passé ce délai, les places redeviennent disponibles.</p>
+    <div class="badge-todo">Paiement à connecter — TODO</div>
+    <div class="actions">
+      <button class="bouton secondaire" onclick="fermerAttente()">Fermer</button>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+  // ============================================
+  // CONFIGURATION — à compléter
+  // ============================================
+  const SUPABASE_URL = 'https://yoxytqdttlnwsxhoymwt.supabase.co';
+  const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlveHl0cWR0dGxud3N4aG95bXd0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQ2Mjc3NzEsImV4cCI6MjEwMDIwMzc3MX0.-ShFJA0LRltCjoNj1y4NdZbokmCJ9O7GkpUZjWvtLig';
+  const DUREE_BLOCAGE_MINUTES = 2880; // 48h
+  const PRIX_PAR_EMPLACEMENT = 13; // euros, emplacement de 2ml
+
+  const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+  // Disposition des zones reprenant le plan : A en haut, B-F à gauche,
+  // G-L à droite (grandes zones), M en colonne verticale à droite.
+  const ZONES_GAUCHE = ['B', 'C', 'D', 'E', 'F'];
+  const ZONES_DROITE = ['G', 'H', 'I', 'J', 'K', 'L'];
+  const ZONE_A = 'A';
+  const ZONE_M = 'M';
+  const ARRIVEES = { A: '7h00', B: '5h00', C: '7h00', D: '5h00', E: '7h00', F: '5h00',
+                     G: '5h00', H: '7h00', I: '5h00', J: '5h00', K: '7h00', L: '5h00', M: '5h00' };
+
+  function formatDuree(minutes) {
+    if (minutes % 60 === 0 && minutes >= 60) return `${minutes / 60}h`;
+    return `${minutes} min`;
+  }
+
+  let placesSelectionnees = new Set();
+  let placesParCode = {};
+  let minuteurId = null;
+
+  async function chargerPlan() {
+    const { data, error } = await supabaseClient
+      .from('emplacements')
+      .select('*')
+      .order('code');
+
+    const carte = document.getElementById('carte-interieur');
+
+    if (error) {
+      carte.innerHTML = '<p class="erreur" style="display:block; grid-column:1/-1;">Impossible de charger le plan. Vérifiez la configuration Supabase.</p>';
+      return;
+    }
+
+    placesParCode = {};
+    data.forEach(p => placesParCode[p.code] = p);
+
+    // Nettoie la sélection des places qui ne sont plus libres
+    [...placesSelectionnees].forEach(code => {
+      if (!placesParCode[code] || placesParCode[code].statut !== 'libre') {
+        placesSelectionnees.delete(code);
+      }
+    });
+
+    const parZone = {};
+    data.forEach(place => {
+      if (!parZone[place.zone]) parZone[place.zone] = [];
+      parZone[place.zone].push(place);
+    });
+
+    carte.innerHTML = `
+      <div class="bloc-entree">
+        <div class="etiquette-entree">ENTRÉE</div>
+        <div class="fleche">→ Arrivée ${ARRIVEES.A}</div>
+      </div>
+      <div class="zone-a-large">${blocZone(ZONE_A, parZone[ZONE_A] || [], 'zone-large')}</div>
+      <div class="colonne-gauche">
+        <div class="decor rose"><div class="emblème">CFR</div>Comité Fête des Roses</div>
+        <div class="decor">Buvette</div>
+        ${ZONES_GAUCHE.map(z => blocZone(z, parZone[z] || [])).join('')}
+      </div>
+      <div class="colonne-droite">
+        ${ZONES_DROITE.map(z => blocZone(z, parZone[z] || [], 'zone-large')).join('')}
+      </div>
+      <div class="colonne-m">
+        <div class="zone-entete" style="writing-mode: vertical-rl; justify-content:center; margin:0 0 4px;">
+          <span class="lettre">M</span>
+        </div>
+        ${grillePlaces(parZone[ZONE_M] || [])}
+      </div>
+    `;
+
+    // Attache les clics sur les places libres
+    carte.querySelectorAll('.place[data-code]').forEach(bouton => {
+      const code = bouton.dataset.code;
+      const place = placesParCode[code];
+      if (place && place.statut === 'libre') {
+        bouton.onclick = () => basculerSelection(code);
+      }
+    });
+
+    rafraichirAffichageSelection();
+    rafraichirPanier();
+  }
+
+  function blocZone(lettre, places, classeGrille = '') {
+    if (places.length === 0) return '';
+    return `
+      <div class="zone-bloc">
+        <div class="zone-entete">
+          <span class="lettre">${lettre}</span>
+          <span class="arrivee">Arrivée ${ARRIVEES[lettre] || ''} · ${places.length} places</span>
+        </div>
+        ${grillePlaces(places, classeGrille)}
+      </div>
+    `;
+  }
+
+  function grillePlaces(places, classeGrille = '') {
+    return `
+      <div class="grille ${classeGrille}">
+        ${places.map(p => `
+          <div class="place ${p.statut === 'libre' ? '' : p.statut}" data-code="${p.code}" title="${libelleStatut(p.statut)}">
+            ${p.code}
+          </div>
+        `).join('')}
+      </div>
+    `;
+  }
+
+  function libelleStatut(statut) {
+    if (statut === 'libre') return 'Libre — cliquez pour sélectionner';
+    if (statut === 'en_attente') return 'En attente de paiement';
+    return 'Déjà réservé';
+  }
+
+  function basculerSelection(code) {
+    if (placesSelectionnees.has(code)) {
+      placesSelectionnees.delete(code);
+    } else {
+      placesSelectionnees.add(code);
+    }
+    rafraichirAffichageSelection();
+    rafraichirPanier();
+  }
+
+  function rafraichirAffichageSelection() {
+    document.querySelectorAll('.place[data-code]').forEach(bouton => {
+      const code = bouton.dataset.code;
+      const place = placesParCode[code];
+      if (place && place.statut === 'libre') {
+        bouton.classList.toggle('selectionnee', placesSelectionnees.has(code));
+      }
+    });
+  }
+
+  function rafraichirPanier() {
+    const panier = document.getElementById('panier');
+    const compte = placesSelectionnees.size;
+    document.getElementById('panier-compte').textContent = compte;
+    document.getElementById('panier-liste').textContent = [...placesSelectionnees].join(', ');
+    document.getElementById('panier-prix').textContent = `${compte * PRIX_PAR_EMPLACEMENT} €`;
+    panier.classList.toggle('visible', compte > 0);
+  }
+
+  function viderSelection() {
+    placesSelectionnees.clear();
+    rafraichirAffichageSelection();
+    rafraichirPanier();
+  }
+
+  function ouvrirFormulaireMultiple() {
+    if (placesSelectionnees.size === 0) return;
+    const conteneur = document.getElementById('liste-selection-formulaire');
+    conteneur.innerHTML = [...placesSelectionnees].map(c => `<span>${c}</span>`).join('');
+    document.getElementById('prix-formulaire').textContent = `${placesSelectionnees.size * PRIX_PAR_EMPLACEMENT} €`;
+    document.getElementById('sous-titre-formulaire').textContent =
+      `Ces places seront bloquées ${formatDuree(DUREE_BLOCAGE_MINUTES)} le temps du paiement.`;
+    document.getElementById('champ-nom').value = '';
+    document.getElementById('champ-email').value = '';
+    document.getElementById('champ-telephone').value = '';
+    document.getElementById('message-erreur').style.display = 'none';
+    document.getElementById('voile-formulaire').classList.add('ouvert');
+  }
+
+  function fermerFormulaire() {
+    document.getElementById('voile-formulaire').classList.remove('ouvert');
+  }
+
+  function afficherErreur(texte) {
+    const el = document.getElementById('message-erreur');
+    el.textContent = texte;
+    el.style.display = 'block';
+  }
+
+  async function validerReservation() {
+    const nom = document.getElementById('champ-nom').value.trim();
+    const email = document.getElementById('champ-email').value.trim();
+    const telephone = document.getElementById('champ-telephone').value.trim();
+
+    if (!nom || !email || !telephone) {
+      afficherErreur('Merci de remplir tous les champs.');
+      return;
+    }
+
+    const codes = [...placesSelectionnees];
+    if (codes.length === 0) return;
+
+    const reference = crypto.randomUUID();
+    const expiration = new Date(Date.now() + DUREE_BLOCAGE_MINUTES * 60 * 1000).toISOString();
+
+    const { data, error } = await supabaseClient
+      .from('emplacements')
+      .update({
+        statut: 'en_attente',
+        nom, email, telephone,
+        reference_paiement: reference,
+        expiration
+      })
+      .in('code', codes)
+      .eq('statut', 'libre')
+      .select();
+
+    if (error) {
+      afficherErreur("Une erreur est survenue, réessayez.");
+      return;
+    }
+
+    const codesConfirmes = (data || []).map(p => p.code);
+    const codesEchoues = codes.filter(c => !codesConfirmes.includes(c));
+
+    if (codesEchoues.length > 0) {
+      afficherErreur(`Certaines places viennent d'être prises : ${codesEchoues.join(', ')}. Les autres ont bien été bloquées.`);
+      codesEchoues.forEach(c => placesSelectionnees.delete(c));
+    }
+
+    if (codesConfirmes.length === 0) {
+      await chargerPlan();
+      rafraichirPanier();
+      return;
+    }
+
+    fermerFormulaire();
+    demarrerAttente(codesConfirmes, expiration);
+    placesSelectionnees.clear();
+    await chargerPlan();
+    rafraichirPanier();
+
+    // Envoie l'email automatique de blocage (ne bloque pas la suite si ça échoue)
+    fetch('/.netlify/functions/envoyer-email-attente', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ codes: codesConfirmes, nom, email, expiration, prix: codesConfirmes.length * PRIX_PAR_EMPLACEMENT })
+    }).catch(() => {});
+
+    // Crée le paiement HelloAsso et redirige le client vers la page de paiement
+    try {
+      const reponse = await fetch('/.netlify/functions/creer-paiement', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ codes: codesConfirmes, reference, nom, email })
+      });
+      const resultat = await reponse.json();
+      if (resultat.redirectUrl) {
+        window.location = resultat.redirectUrl;
+      } else {
+        afficherErreurAttente("Impossible de démarrer le paiement, réessayez ou contactez le CFR.");
+      }
+    } catch (e) {
+      afficherErreurAttente("Impossible de démarrer le paiement, réessayez ou contactez le CFR.");
+    }
+  }
+
+  function afficherErreurAttente(texte) {
+    // Petit message affiché sous le compte à rebours si la redirection échoue
+    const sousTitre = document.getElementById('sous-titre-attente');
+    sousTitre.innerHTML += `<br><span style="color:var(--reserve)">${texte}</span>`;
+  }
+
+  function demarrerAttente(codes, expirationISO) {
+    document.getElementById('titre-attente').textContent =
+      codes.length > 1 ? `${codes.length} places bloquées` : `Place ${codes[0]} bloquée`;
+    document.getElementById('sous-titre-attente').textContent =
+      `${codes.join(', ')} — il vous reste ce temps pour finaliser le paiement :`;
+    document.getElementById('voile-attente').classList.add('ouvert');
+
+    const expiration = new Date(expirationISO).getTime();
+    clearInterval(minuteurId);
+    minuteurId = setInterval(() => {
+      const restant = Math.max(0, expiration - Date.now());
+      const minutes = Math.floor(restant / 60000);
+      const secondes = Math.floor((restant % 60000) / 1000);
+      document.getElementById('minuteur').textContent =
+        `${String(minutes).padStart(2, '0')}:${String(secondes).padStart(2, '0')}`;
+      if (restant <= 0) {
+        clearInterval(minuteurId);
+        fermerAttente();
+        chargerPlan();
+      }
+    }, 1000);
+  }
+
+  function fermerAttente() {
+    document.getElementById('voile-attente').classList.remove('ouvert');
+    clearInterval(minuteurId);
+  }
+
+  // Rafraîchit le plan toutes les 15 secondes pour voir les places libérées/prises par d'autres visiteurs
+  chargerPlan();
+  setInterval(chargerPlan, 15000);
+</script>
+
+</body>
+</html>
