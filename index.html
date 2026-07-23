@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Vide-greniers P1 — Comité Fête des Roses</title>
+<title>Vide-greniers — Comité Fête des Roses</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Archivo:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
@@ -31,6 +31,8 @@
 
   * { box-sizing: border-box; }
 
+  html { scroll-behavior: smooth; }
+
   body {
     margin: 0;
     background: var(--kraft);
@@ -39,6 +41,10 @@
     line-height: 1.5;
     padding-bottom: 90px;
   }
+
+  a { color: inherit; }
+
+  /* ============ EN-TETE + NAV ============ */
 
   .entete {
     background: var(--vert-comite);
@@ -70,11 +76,177 @@
     font-size: 0.9rem;
   }
 
+  .nav {
+    position: sticky;
+    top: 0;
+    z-index: 7;
+    background: var(--vert-fonce);
+    display: flex;
+    justify-content: center;
+    gap: 0;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  }
+
+  .nav a {
+    color: var(--kraft-fonce);
+    text-decoration: none;
+    font-size: 0.82rem;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    padding: 0.75rem 1.1rem;
+    border-bottom: 3px solid transparent;
+    transition: border-color 0.15s ease, color 0.15s ease;
+    white-space: nowrap;
+  }
+
+  .nav a:hover,
+  .nav a:focus {
+    color: var(--blanc);
+    border-bottom-color: var(--or);
+  }
+
   .conteneur {
     max-width: 1200px;
     margin: 0 auto;
     padding: 1.5rem 1rem 3rem;
   }
+
+  .section-titre {
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: clamp(1.25rem, 3vw, 1.6rem);
+    color: var(--vert-fonce);
+    margin: 0 0 0.3rem;
+  }
+
+  .section-sous-titre {
+    font-size: 0.88rem;
+    color: var(--gris-texte);
+    margin: 0 0 1.2rem;
+  }
+
+  /* ============ INFOS PRATIQUES ============ */
+
+  .infos {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 0.8rem;
+    margin: 1.5rem 0;
+  }
+
+  .info-carte {
+    background: var(--blanc);
+    border: 1px solid var(--kraft-fonce);
+    border-radius: 6px;
+    padding: 0.9rem 1rem;
+    text-align: center;
+  }
+
+  .info-carte .valeur {
+    font-family: 'Space Mono', monospace;
+    font-weight: 700;
+    font-size: 1.15rem;
+    color: var(--vert-comite);
+    display: block;
+  }
+
+  .info-carte .libelle {
+    font-size: 0.72rem;
+    color: var(--gris-texte);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  /* ============ PLAN DU VIDE-GRENIERS ============ */
+
+  .plan-section {
+    scroll-margin-top: 52px;
+  }
+
+  .plans-galerie {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.2rem;
+  }
+
+  .plan-carte {
+    background: var(--blanc);
+    border: 1px solid var(--kraft-fonce);
+    border-radius: 6px;
+    overflow: hidden;
+  }
+
+  .plan-carte-entete {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.7rem 1rem;
+    background: var(--kraft-fonce);
+  }
+
+  .plan-carte-entete .nom {
+    font-family: 'Space Mono', monospace;
+    font-weight: 700;
+    font-size: 0.85rem;
+    color: var(--vert-fonce);
+  }
+
+  .plan-carte-entete .agrandir {
+    font-size: 0.72rem;
+    color: var(--gris-texte);
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+  }
+
+  .plan-carte-image-conteneur {
+    position: relative;
+    background: var(--blanc);
+    cursor: zoom-in;
+  }
+
+  .plan-carte-image-conteneur img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  .voile-image {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(28, 46, 36, 0.9);
+    z-index: 12;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+  }
+
+  .voile-image.ouvert { display: flex; }
+
+  .voile-image img {
+    max-width: 100%;
+    max-height: 90vh;
+    border-radius: 4px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+  }
+
+  .voile-image .fermer-image {
+    position: absolute;
+    top: 1rem;
+    right: 1.2rem;
+    background: var(--blanc);
+    color: var(--vert-fonce);
+    border: none;
+    border-radius: 50%;
+    width: 38px;
+    height: 38px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    line-height: 1;
+  }
+
+  /* ============ LEGENDE ============ */
 
   .legende {
     display: flex;
@@ -101,6 +273,7 @@
     height: 11px;
     border-radius: 2px;
     display: inline-block;
+    flex-shrink: 0;
   }
 
   .puce.libre { background: var(--libre); }
@@ -108,12 +281,17 @@
   .puce.reserve { background: var(--reserve); }
   .puce.selection { background: var(--or); }
 
-  /* ============ CARTE (mise en page façon plan) ============ */
+  /* ============ CARTE RESERVATION (mise en page façon plan) ============ */
+
+  .reservation-section {
+    scroll-margin-top: 52px;
+  }
 
   .carte {
     background: var(--route);
     border-radius: 6px;
     padding: 14px;
+    overflow-x: auto;
   }
 
   .carte-interieur {
@@ -128,6 +306,7 @@
       "zoneA  zoneA  zoneA"
       "gauche droite m";
     gap: 14px;
+    min-width: 620px;
   }
 
   .bloc-entree {
@@ -199,7 +378,7 @@
     gap: 4px;
   }
 
-  .decor.rose .emblème {
+  .decor.rose .embleme {
     width: 34px;
     height: 34px;
     border-radius: 50%;
@@ -269,6 +448,7 @@
     background: var(--libre-fond);
     color: var(--libre);
     border-color: var(--libre);
+    user-select: none;
   }
 
   .place:hover { transform: translateY(-2px); }
@@ -295,11 +475,28 @@
     box-shadow: 0 0 0 2px var(--or-fond);
   }
 
+  .astuce-defilement {
+    display: none;
+    font-size: 0.75rem;
+    color: var(--gris-texte);
+    text-align: center;
+    margin: 0.5rem 0 0;
+  }
+
   .pied {
     text-align: center;
     font-size: 0.78rem;
     color: var(--gris-texte);
     padding-top: 1rem;
+  }
+
+  footer.pied-page {
+    text-align: center;
+    padding: 1.6rem 1rem 2rem;
+    font-size: 0.78rem;
+    color: var(--gris-texte);
+    border-top: 1px solid var(--kraft-fonce);
+    margin-top: 1rem;
   }
 
   /* ============ PANIER DE SELECTION ============ */
@@ -480,7 +677,9 @@
     font-weight: 600;
   }
 
-  @media (max-width: 760px) {
+  /* ============ RESPONSIVE ============ */
+
+  @media (max-width: 900px) {
     .carte-interieur {
       grid-template-columns: 1fr;
       grid-template-areas:
@@ -489,7 +688,27 @@
         "gauche"
         "droite"
         "m";
+      min-width: 560px;
     }
+  }
+
+  @media (max-width: 760px) {
+    .nav {
+      overflow-x: auto;
+      justify-content: flex-start;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .astuce-defilement { display: block; }
+  }
+
+  @media (max-width: 480px) {
+    .entete { padding: 1.7rem 1rem 1.3rem; }
+    .conteneur { padding: 1.1rem 0.7rem 3rem; }
+    .fiche { padding: 1.3rem; }
+    .panier { flex-direction: column; align-items: stretch; }
+    .panier-actions { width: 100%; }
+    .panier-actions .bouton { flex: 1; }
   }
 </style>
 </head>
@@ -497,26 +716,93 @@
 
 <div class="entete">
   <div class="fleuron">Comité Fête des Roses</div>
-  <h1>Vide-greniers · Parking N°1</h1>
-  <p>Cimetière de Brie-Comte-Robert — réservation d'emplacement en ligne</p>
+  <h1>Vide-greniers de Brie-Comte-Robert</h1>
+  <p>Cimetière de Brie-Comte-Robert — plan des emplacements et réservation en ligne</p>
 </div>
+
+<nav class="nav">
+  <a href="#plan">Le plan</a>
+  <a href="#reservation">Réserver un emplacement</a>
+</nav>
 
 <div class="conteneur">
 
-  <div class="legende">
-    <div class="legende-item"><span class="puce libre"></span> Libre</div>
-    <div class="legende-item"><span class="puce selection"></span> Sélectionné</div>
-    <div class="legende-item"><span class="puce attente"></span> En attente de paiement</div>
-    <div class="legende-item"><span class="puce reserve"></span> Réservé</div>
-  </div>
-
-  <div class="carte">
-    <div class="carte-interieur" id="carte-interieur">
-      <p style="grid-column: 1/-1; color: var(--gris-texte);">Chargement du plan…</p>
+  <div class="infos">
+    <div class="info-carte">
+      <span class="valeur">2 ml</span>
+      <span class="libelle">par emplacement</span>
+    </div>
+    <div class="info-carte">
+      <span class="valeur">13 €</span>
+      <span class="libelle">le tarif</span>
+    </div>
+    <div class="info-carte">
+      <span class="valeur">2</span>
+      <span class="libelle">parkings disponibles</span>
+    </div>
+    <div class="info-carte">
+      <span class="valeur">5h – 7h</span>
+      <span class="libelle">arrivée selon zone</span>
     </div>
   </div>
 
-  <p class="pied">Chaque emplacement fait la même dimension sur l'ensemble du vide-greniers. Cliquez sur plusieurs places libres pour les réserver ensemble.</p>
+  <section class="plan-section" id="plan">
+    <h2 class="section-titre">Plan du vide-greniers</h2>
+    <p class="section-sous-titre">Retrouvez l'implantation complète des emplacements sur les deux parkings avant de réserver. Cliquez sur un plan pour l'agrandir.</p>
+
+    <div class="plans-galerie">
+      <figure class="plan-carte">
+        <div class="plan-carte-entete">
+          <span class="nom">Parking N°1 — zones A à M</span>
+          <span class="agrandir">🔍 Agrandir</span>
+        </div>
+        <div class="plan-carte-image-conteneur" onclick="ouvrirImage('plan-parking-1.png', 'Plan du Parking N°1')">
+          <img src="plan-parking-1.png" alt="Plan du vide-greniers, Parking N°1, zones A à M, cimetière de Brie-Comte-Robert" loading="lazy">
+        </div>
+      </figure>
+
+      <figure class="plan-carte">
+        <div class="plan-carte-entete">
+          <span class="nom">Parking N°2 — zones N à S</span>
+          <span class="agrandir">🔍 Agrandir</span>
+        </div>
+        <div class="plan-carte-image-conteneur" onclick="ouvrirImage('plan-parking-2.png', 'Plan du Parking N°2')">
+          <img src="plan-parking-2.png" alt="Plan du vide-greniers, Parking N°2, groupe scolaire Georges Brassens, rue Petit de Beauverger" loading="lazy">
+        </div>
+      </figure>
+    </div>
+  </section>
+
+  <section class="reservation-section" id="reservation">
+    <h2 class="section-titre">Réserver un emplacement — Parking N°1</h2>
+    <p class="section-sous-titre">Sélectionnez une ou plusieurs places libres sur le plan interactif ci-dessous, puis validez votre réservation.</p>
+
+    <div class="legende">
+      <div class="legende-item"><span class="puce libre"></span> Libre</div>
+      <div class="legende-item"><span class="puce selection"></span> Sélectionné</div>
+      <div class="legende-item"><span class="puce attente"></span> En attente de paiement</div>
+      <div class="legende-item"><span class="puce reserve"></span> Réservé</div>
+    </div>
+
+    <div class="carte">
+      <div class="carte-interieur" id="carte-interieur">
+        <p style="grid-column: 1/-1; color: var(--gris-texte);">Chargement du plan…</p>
+      </div>
+    </div>
+    <p class="astuce-defilement">↔ Faites glisser le plan horizontalement pour voir toutes les zones.</p>
+
+    <p class="pied">Chaque emplacement fait la même dimension sur l'ensemble du vide-greniers. Cliquez sur plusieurs places libres pour les réserver ensemble.</p>
+  </section>
+
+</div>
+
+<footer class="pied-page">
+  Comité Fête des Roses — Brie-Comte-Robert
+</footer>
+
+<div class="voile-image" id="voile-image" onclick="fermerImage(event)">
+  <button class="fermer-image" onclick="fermerImage(event)" aria-label="Fermer">✕</button>
+  <img id="image-agrandie" src="" alt="">
 </div>
 
 <div class="panier" id="panier">
@@ -638,7 +924,7 @@
       </div>
       <div class="zone-a-large">${blocZone(ZONE_A, parZone[ZONE_A] || [], 'zone-large')}</div>
       <div class="colonne-gauche">
-        <div class="decor rose"><div class="emblème">CFR</div>Comité Fête des Roses</div>
+        <div class="decor rose"><div class="embleme">CFR</div>Comité Fête des Roses</div>
         <div class="decor">Buvette</div>
         ${ZONES_GAUCHE.map(z => blocZone(z, parZone[z] || [])).join('')}
       </div>
@@ -866,6 +1152,23 @@
   function fermerAttente() {
     document.getElementById('voile-attente').classList.remove('ouvert');
     clearInterval(minuteurId);
+  }
+
+  // ============================================
+  // Zoom sur les plans du vide-greniers
+  // ============================================
+  function ouvrirImage(source, texteAlt) {
+    const voile = document.getElementById('voile-image');
+    const image = document.getElementById('image-agrandie');
+    image.src = source;
+    image.alt = texteAlt;
+    voile.classList.add('ouvert');
+  }
+
+  function fermerImage(evenement) {
+    if (evenement.target.id === 'voile-image' || evenement.target.classList.contains('fermer-image')) {
+      document.getElementById('voile-image').classList.remove('ouvert');
+    }
   }
 
   // Rafraîchit le plan toutes les 15 secondes pour voir les places libérées/prises par d'autres visiteurs
