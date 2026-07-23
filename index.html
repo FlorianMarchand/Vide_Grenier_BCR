@@ -483,6 +483,31 @@
     margin: 0.5rem 0 0;
   }
 
+  /* ============ CARTE PARKING N°2 ============ */
+
+  .carte-interieur-2 {
+    background: var(--blanc);
+    border: 4px solid #7a6a45;
+    border-radius: 4px;
+    padding: 16px;
+    display: grid;
+    grid-template-columns: 130px 1fr 1fr;
+    grid-template-areas:
+      "s      o      o"
+      "s      n      q"
+      "p      p      p"
+      "r      r      r";
+    gap: 14px;
+    min-width: 560px;
+  }
+
+  .zone-s-colonne { grid-area: s; display: flex; flex-direction: column; gap: 8px; }
+  .zone-o-large { grid-area: o; }
+  .zone-n-bloc { grid-area: n; }
+  .zone-q-bloc { grid-area: q; }
+  .zone-p-large { grid-area: p; }
+  .zone-r-large { grid-area: r; }
+
   .pied {
     text-align: center;
     font-size: 0.78rem;
@@ -722,7 +747,8 @@
 
 <nav class="nav">
   <a href="#plan">Le plan</a>
-  <a href="#reservation">Réserver un emplacement</a>
+  <a href="#reservation">Parking N°1</a>
+  <a href="#reservation-2">Parking N°2</a>
 </nav>
 
 <div class="conteneur">
@@ -792,6 +818,20 @@
     <p class="astuce-defilement">↔ Faites glisser le plan horizontalement pour voir toutes les zones.</p>
 
     <p class="pied">Chaque emplacement fait la même dimension sur l'ensemble du vide-greniers. Cliquez sur plusieurs places libres pour les réserver ensemble.</p>
+  </section>
+
+  <section class="reservation-section" id="reservation-2">
+    <h2 class="section-titre">Réserver un emplacement — Parking N°2</h2>
+    <p class="section-sous-titre">Groupe scolaire Georges Brassens. Vos sélections des deux parkings se cumulent dans le même panier.</p>
+
+    <div class="carte">
+      <div class="carte-interieur-2" id="carte-interieur-2">
+        <p style="grid-column: 1/-1; color: var(--gris-texte);">Chargement du plan…</p>
+      </div>
+    </div>
+    <p class="astuce-defilement">↔ Faites glisser le plan horizontalement pour voir toutes les zones.</p>
+
+    <p class="pied">Zones S, O, N, Q, P, R.</p>
   </section>
 
 </div>
@@ -874,7 +914,18 @@
   const ZONE_A = 'A';
   const ZONE_M = 'M';
   const ARRIVEES = { A: '7h00', B: '5h00', C: '7h00', D: '5h00', E: '7h00', F: '5h00',
-                     G: '5h00', H: '7h00', I: '5h00', J: '5h00', K: '7h00', L: '5h00', M: '5h00' };
+                     G: '5h00', H: '7h00', I: '5h00', J: '5h00', K: '7h00', L: '5h00', M: '5h00',
+                     S: '5h00', O: '5h00', N: '5h00', Q: '7h00', P: '5h00', R: '5h00' };
+
+  // Disposition des zones du Parking N°2, reprenant plan-parking-2.png :
+  // S en colonne à gauche, O en haut, N et Q juste en dessous, P sur toute
+  // la largeur, R tout en bas (le long du Chemin Saint Christophe).
+  const ZONE_S = 'S';
+  const ZONE_O = 'O';
+  const ZONE_N = 'N';
+  const ZONE_Q = 'Q';
+  const ZONE_P = 'P';
+  const ZONE_R = 'R';
 
   function formatDuree(minutes) {
     if (minutes % 60 === 0 && minutes >= 60) return `${minutes / 60}h`;
@@ -936,8 +987,18 @@
       </div>
     `;
 
-    // Attache les clics sur les places libres
-    carte.querySelectorAll('.place[data-code]').forEach(bouton => {
+    const carte2 = document.getElementById('carte-interieur-2');
+    carte2.innerHTML = `
+      <div class="zone-s-colonne">${blocZone(ZONE_S, parZone[ZONE_S] || [])}</div>
+      <div class="zone-o-large">${blocZone(ZONE_O, parZone[ZONE_O] || [], 'zone-large')}</div>
+      <div class="zone-n-bloc">${blocZone(ZONE_N, parZone[ZONE_N] || [])}</div>
+      <div class="zone-q-bloc">${blocZone(ZONE_Q, parZone[ZONE_Q] || [])}</div>
+      <div class="zone-p-large">${blocZone(ZONE_P, parZone[ZONE_P] || [], 'zone-large')}</div>
+      <div class="zone-r-large">${blocZone(ZONE_R, parZone[ZONE_R] || [], 'zone-large')}</div>
+    `;
+
+    // Attache les clics sur les places libres, sur les deux cartes (parking 1 et 2)
+    document.querySelectorAll('.place[data-code]').forEach(bouton => {
       const code = bouton.dataset.code;
       const place = placesParCode[code];
       if (place && place.statut === 'libre') {
