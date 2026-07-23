@@ -860,11 +860,8 @@
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-  // ============================================
-  // CONFIGURATION — à compléter
-  // ============================================
-  const SUPABASE_URL = process.env.SUPABASE_URL
-  const SUPABASE_ANON_KEY = process.env.SUPABASE_ANON_KEY
+  const SUPABASE_URL = "https://yoxytqdttlnwsxhoymwt.supabase.co";
+  const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlveHl0cWR0dGxud3N4aG95bXd0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQ2Mjc3NzEsImV4cCI6MjEwMDIwMzc3MX0.-ShFJA0LRltCjoNj1y4NdZbokmCJ9O7GkpUZjWvtLig";
   const DUREE_BLOCAGE_MINUTES = 2880; // 48h
   const PRIX_PAR_EMPLACEMENT = 13; // euros, emplacement de 2ml
 
@@ -1171,9 +1168,9 @@
     }
   }
 
-  // Rafraîchit le plan toutes les 15 secondes pour voir les places libérées/prises par d'autres visiteurs
+  // Rafraîchit le plan toutes les 5 minutes pour voir les places libérées/prises par d'autres visiteurs
   chargerPlan();
-  setInterval(chargerPlan, 15000);
+  setInterval(chargerPlan, 300000);
 </script>
 
 </body>
